@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expert Survey on FOMC Communication: June 2026 (pilot)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fcfcfb; --paper-2:#f4f4f2; --paper-hover:#f0f0ee;
+  --ink:#1a1a1a; --ink-muted:#5b554a; --ink-faint:#8a8275;
+  --rule:#e3e3e0; --rule-strong:#1a1a1a;
+  --accent:#3a4a5c; --accent-soft:#e3e8ee;
+  --hl:#fdf3c4; --hl-edge:#fdf3c4;
+  --positive:#4a5a4a; --negative:#c0392b;
+  --font-serif:'EB Garamond','Source Serif Pro',Georgia,'Times New Roman',serif;
+  --font-sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-serif); font-size:18px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px; margin:0 auto; padding:0 28px 160px}
+
+/* ---- masthead ---- */
+.masthead{padding:54px 0 26px; border-bottom:2px solid var(--rule-strong)}
+.eyebrow{font-family:var(--font-sans); font-size:12px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:14px}
+.title{font-size:38px; line-height:1.12; font-weight:600; margin:0 0 10px; letter-spacing:-.01em}
+.lead{font-size:19px; color:var(--ink-muted); line-height:1.5; margin:0 0 20px; max-width:66ch}
+.about{font-size:16.5px; color:var(--ink); line-height:1.62; margin:0 0 13px; max-width:66ch}
+.about b{font-weight:600}
+.go{font-size:16.5px; color:var(--ink); margin:18px 0 0}
+.signoff{margin-top:24px; padding-top:16px; border-top:1px solid var(--rule);
+  font-family:var(--font-sans); font-size:13px; color:var(--ink-muted); line-height:1.8}
+.signoff .name{color:var(--ink); font-weight:600}
+.hl-demo{background:var(--hl); border-radius:2px; padding:0 3px; box-decoration-break:clone}
+.u-emph{text-decoration:underline; text-underline-offset:2px}
+
+/* ---- parts ---- */
+section.part{padding:40px 0 6px; border-bottom:1px solid var(--rule)}
+.part-head{display:flex; align-items:baseline; gap:14px; margin-bottom:6px}
+.part-letter{font-family:var(--font-mono); font-size:13px; color:#fff; background:var(--accent);
+  width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center;
+  justify-content:center; font-weight:500; flex:none; transform:translateY(2px)}
+#partA .part-letter{background:#3a4a5c}
+#partB .part-letter{background:#3f6b5e}
+#partC .part-letter{background:#856730}
+#partD .part-letter{background:#9c4f3c}
+#partE .part-letter{background:#5e4d72}
+#partC .explain{border-left-color:#856730}
+#partD .explain{border-left-color:#9c4f3c}
+.part-title{font-size:26px; font-weight:600; margin:0; letter-spacing:-.01em}
+.part-intro{color:var(--ink-muted); margin:6px 0 22px; font-size:17px}
+
+/* ---- explain box ---- */
+.explain{background:var(--paper-2); border:1px solid var(--rule); border-left:3px solid var(--accent);
+  border-radius:3px; padding:14px 18px; margin:0 0 22px; font-size:15px; color:var(--ink-muted);
+  font-family:var(--font-sans); line-height:1.55}
+.explain b{color:var(--ink)}
+
+/* ---- statement highlighter ---- */
+.stmt-section{margin:0 0 26px; padding:0 0 22px; border-bottom:1px dashed var(--rule)}
+.stmt-section:last-child{border-bottom:none}
+.stmt-head{display:flex; align-items:center; gap:10px; margin-bottom:10px; font-family:var(--font-sans)}
+.stmt-tag{font-family:var(--font-mono); font-size:11px; background:var(--ink); color:var(--paper);
+  padding:2px 7px; border-radius:3px; letter-spacing:.04em}
+.stmt-name{font-size:14px; font-weight:600; letter-spacing:.02em; text-transform:uppercase; color:var(--ink-muted)}
+.erase{margin-left:auto; font-family:var(--font-sans); font-size:12px; color:var(--accent);
+  background:none; border:none; cursor:pointer; padding:2px 4px; opacity:.65}
+.erase:hover{opacity:1; text-decoration:underline}
+.stmt-text{font-size:18.5px; line-height:1.72; cursor:text; user-select:text;
+  -webkit-user-select:text; padding:14px 16px; background:var(--paper-2);
+  border:1px solid var(--rule); border-radius:4px}
+.stmt-text mark{background:var(--hl); border-radius:2px; padding:.5px 1px; cursor:pointer;
+  transition:background .12s}
+.stmt-text mark:hover{background:#f6e79a}
+.notes{display:grid; gap:12px; margin-top:14px}
+.field-label{font-family:var(--font-sans); font-size:12.5px; font-weight:600; color:var(--ink-muted);
+  text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; display:block}
+.field-label .hint{font-weight:400; text-transform:none; letter-spacing:0; color:var(--ink-faint); font-size:12.5px}
+textarea{width:100%; font-family:var(--font-sans); font-size:15px; line-height:1.5; color:var(--ink);
+  background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:9px 11px;
+  resize:vertical; min-height:54px}
+textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* ---- tables (SEP, uncertainty, risks) ---- */
+table.grid{width:100%; border-collapse:collapse; font-family:var(--font-sans); margin-bottom:8px}
+table.grid th, table.grid td{padding:9px 8px; text-align:center; border-bottom:1px solid var(--rule)}
+table.grid thead th{font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted);
+  border-bottom:1.5px solid var(--rule-strong); font-weight:600}
+table.grid tbody th{text-align:left; font-size:15px; font-weight:500; color:var(--ink); white-space:nowrap}
+table.grid tbody tr:hover{background:var(--paper-hover)}
+table.grid tr.invalid{background:rgba(192,57,43,.08)}
+.cell-in{width:62px; font-family:var(--font-mono); font-size:15px; text-align:center; color:var(--ink);
+  background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:7px 4px}
+.cell-in:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+.cell-in.pct{width:50px; text-align:right; padding-right:4px}
+.pct-suffix{font-size:12px; color:var(--ink-faint); margin-left:2px}
+.prev{display:block; font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); margin-top:4px}
+.cell-na{color:var(--ink-faint); font-family:var(--font-mono)}
+.rowtotal{font-family:var(--font-mono); font-size:14px; color:var(--ink-faint)}
+.rowtotal.good{color:var(--positive)}
+.rowtotal.bad{color:var(--negative); font-weight:600}
+.unit{font-family:var(--font-sans); font-size:12px; color:var(--ink-faint); font-weight:400}
+
+/* ---- feedback ---- */
+.fb-row{display:grid; grid-template-columns:1fr; gap:7px; margin-bottom:20px}
+.scale{display:flex; gap:8px; flex-wrap:wrap}
+.scale label{font-family:var(--font-sans); font-size:14px; cursor:pointer; border:1px solid var(--rule);
+  border-radius:6px; padding:7px 14px; color:var(--ink-muted); transition:all .12s; user-select:none}
+.scale label:hover{border-color:var(--hl-edge)}
+.scale label.sel{background:var(--accent); border-color:var(--accent); color:#fff}
+.scale label input{position:absolute; opacity:0; pointer-events:none}
+.num-in{width:84px; font-family:var(--font-mono); font-size:15px; padding:8px 10px; text-align:center;
+  border:1px solid var(--rule); border-radius:5px; background:var(--paper)}
+.num-in:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* ---- submit bar ---- */
+.submitbar{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--paper);
+  border-top:1px solid var(--rule-strong)}
+.submitbar .inner{max-width:860px; margin:0 auto; padding:12px 28px; display:flex; align-items:center;
+  gap:14px; font-family:var(--font-sans)}
+button.primary{background:var(--accent); color:#fff; border:none; border-radius:6px; padding:11px 22px;
+  font-family:var(--font-sans); font-size:15px; font-weight:600; cursor:pointer; transition:filter .12s}
+button.primary:hover{filter:brightness(1.08)}
+button.ghost{background:none; color:var(--accent); border:1px solid var(--rule); border-radius:6px;
+  padding:10px 16px; font-family:var(--font-sans); font-size:14px; cursor:pointer}
+button.ghost:hover{background:var(--paper-hover)}
+.status{font-size:13.5px; color:var(--ink-muted)}
+.status.ok{color:var(--positive)} .status.warn{color:var(--negative)}
+.saved-note{margin-left:auto; font-size:12.5px; color:var(--ink-faint)}
+
+@media (max-width:640px){
+  .title{font-size:30px} .wrap{padding:0 18px 170px}
+  .submitbar .inner{padding:10px 18px; flex-wrap:wrap}
+  .cell-in{width:52px} .cell-in.pct{width:44px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">Expert Survey on FOMC Communication &mdash; Pilot</div>
+    <h1 class="title">Forecasting the June 2026 FOMC meeting</h1>
+    <p class="lead">This short survey is part of a research project on how experts read and
+      anticipate Federal Reserve communication. We are asking a small group of experts to
+      forecast what the Committee will publish at its upcoming meeting.</p>
+    <p class="about"><b>What we're asking.</b> You'll forecast the two documents the Committee
+      releases on <span id="releaseDate">June 17, 2026</span>: the post-meeting policy statement
+      and the Summary of Economic Projections (SEP). It takes about 10&ndash;15 minutes.</p>
+    <p class="about"><b>How it works.</b> This is a simple web form rather than a survey platform.
+      As you answer, your responses are saved in your browser, so you can close the page and
+      return later in the same browser without losing your progress. Nothing is sent until you
+      click Submit, when your answers are added to a private Google Sheet used only for this
+      study.</p>
+    <p class="about"><b>Privacy.</b> This survey is <span class="u-emph">fully anonymous</span>. We ask for and collect no personal information, only your answers, so your responses cannot be traced back to you.</p>
+    <p class="go">When you're finished, click <b>Submit</b>.</p>
+    <div class="signoff">
+      <div><span class="name">Leonardo Melosi</span> &middot; Professor, Department of Economics, European University Institute</div>
+      <div><span class="name">Matteo Muntoni</span> &middot; PhD researcher, Department of Economics, European University Institute</div>
+    </div>
+  </header>
+
+  <!-- PART A -->
+  <section class="part" id="partA">
+    <div class="part-head"><span class="part-letter">A</span><h2 class="part-title">The statement</h2></div>
+    <p class="part-intro">Below is the statement from the last meeting, on <b id="prevStmtDate">April 29, 2026</b>, in its five sections. For each section, mark the wording you expect to change in June, then describe the change.</p>
+    <p class="part-intro">Drag across any words you expect to change and they become highlighted <span class="hl-demo">like this</span>; click a highlight to remove it. Then use the boxes under each section to say how it changes and add any new sentences you expect.</p>
+    <div id="statement-sections"></div>
+    <div class="stmt-section" style="border-bottom:none">
+      <div class="stmt-head"><span class="stmt-tag">S6</span>
+        <span class="stmt-name">A new theme or paragraph</span></div>
+      <div class="notes">
+        <div><label class="field-label">Anything new you expect the Committee to add, beyond the five sections above <span class="hint">(optional)</span></label>
+          <textarea id="globalAdd" placeholder=""></textarea></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART B -->
+  <section class="part" id="partB">
+    <div class="part-head"><span class="part-letter">B</span><h2 class="part-title">Median projections (SEP)</h2></div>
+    <p class="part-intro">Give the median projection you expect the Committee to report for each variable and horizon. In the SEP, growth and inflation are Q4-over-Q4, the unemployment rate is the fourth-quarter level, and the federal funds rate is the year-end level. Each grey figure is the median from the previous SEP (<span id="prevSepLabel">March 2026</span>). Leave a box blank if you have no view.</p>
+    <table class="grid" id="sep-table"></table>
+    <p class="unit">All figures are in percent. Core PCE inflation has no longer-run value in the SEP, so that cell is omitted.</p>
+  </section>
+
+  <!-- PART C -->
+  <section class="part" id="partC">
+    <div class="part-head"><span class="part-letter">C</span><h2 class="part-title">Uncertainty</h2></div>
+    <p class="part-intro">How will the 19 participants assess the uncertainty around their projections?</p>
+    <div class="explain">In the SEP, each participant judges whether the uncertainty around their own projections is <b>lower</b> than, <b>broadly similar</b> to, or <b>higher</b> than the average over the past 20 years. Roughly, broadly similar means the participant sees the width of the historical fan-chart confidence interval as about right for their forecast; higher means they would draw a wider interval, lower a narrower one. For each variable, give the number of the 19 participants you expect in each category; the three numbers add up to 19. Each grey figure is the corresponding count from the March 2026 SEP.</div>
+    <table class="grid" id="unc-table"></table>
+  </section>
+
+  <!-- PART D -->
+  <section class="part" id="partD">
+    <div class="part-head"><span class="part-letter">D</span><h2 class="part-title">Balance of risks</h2></div>
+    <p class="part-intro">How will they assess the balance of risks to those projections?</p>
+    <div class="explain">In the SEP, each participant judges whether the risks to their own projections are <b>weighted to the downside</b>, <b>broadly balanced</b>, or <b>weighted to the upside</b>. Roughly, broadly balanced means viewing the confidence interval around the projection as approximately symmetric, rather than tilted up or down. For each variable, give the number of the 19 participants you expect in each category; the three numbers add up to 19. Each grey figure is the corresponding count from the March 2026 SEP.</div>
+    <table class="grid" id="risk-table"></table>
+  </section>
+
+  <!-- PART E -->
+  <section class="part" id="partE">
+    <div class="part-head"><span class="part-letter">E</span><h2 class="part-title">Feedback on the survey</h2></div>
+    <p class="part-intro">This is a pilot, so your feedback helps us improve the final version. Everything here is optional.</p>
+    <div class="fb-row">
+      <label class="field-label">How clear were the questions?</label>
+      <div class="scale" id="fb-clarity"></div>
+    </div>
+    <div class="fb-row">
+      <label class="field-label">How long was it?</label>
+      <div class="scale" id="fb-length"></div>
+    </div>
+    <div class="fb-row">
+      <label class="field-label">How many minutes did it take?</label>
+      <input class="num-in" id="fb-minutes" type="number" min="0" step="1" inputmode="numeric">
+    </div>
+    <div class="fb-row">
+      <label class="field-label">Was anything confusing?</label>
+      <textarea id="fb-confusing" placeholder="Optional"></textarea>
+    </div>
+    <div class="fb-row">
+      <label class="field-label">Any suggestions for the final version?</label>
+      <textarea id="fb-suggestions" placeholder="Optional"></textarea>
+    </div>
+  </section>
+</div>
+
+<div class="submitbar">
+  <div class="inner">
+    <button class="primary" id="submitBtn">Submit</button>
+    <span class="status" id="status"></span>
+    <span class="saved-note" id="savedNote"></span>
+  </div>
+</div>
+
+<script>
+/* CONFIG: set ENDPOINT once, then send the SAME file (or one link) to everyone.
+   ENDPOINT      : your Google Apps Script web app URL (see collect.gs). Required - answers are sent here.
+   RESPONDENT_ID : leave empty. Responses are anonymous and carry no identifier. */
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbx34v6TkkySyjTQar02y2c0oEOCPbKiR9Eg3h4co7tzB2vzDG2pMOecfBmMk9Gs-zpq/exec";
+const RESPONDENT_ID = "";
+const MEETING = "2026-06";
+
+/* Source data snapshot. Taken from FedGen-data/parsed/statements.jsonl (statement_20260429)
+   and sep.jsonl (20260318). To build the final version, replace this block. */
+const SOURCE = {
+  meeting_label: "June 16-17, 2026",
+  release_date: "June 17, 2026",
+  prev_statement_date: "April 29, 2026",
+  prev_sep_date: "March 2026",
+  prev_sep_short: "Mar 2026",
+  statement: { sections: [
+    {id:"S1", title:"Economic conditions", text:"Recent indicators suggest that economic activity has been expanding at a solid pace. Job gains have remained low, on average, and the unemployment rate has been little changed in recent months. Inflation is elevated, in part reflecting the recent increase in global energy prices."},
+    {id:"S2", title:"Objectives and risks", text:"The Committee seeks to achieve maximum employment and inflation at the rate of 2 percent over the longer run. Developments in the Middle East are contributing to a high level of uncertainty about the economic outlook. The Committee is attentive to the risks to both sides of its dual mandate."},
+    {id:"S3", title:"Policy decision", text:"In support of its goals, the Committee decided to maintain the target range for the federal funds rate at 3-1/2 to 3-3/4 percent. In considering the extent and timing of additional adjustments to the target range for the federal funds rate, the Committee will carefully assess incoming data, the evolving outlook, and the balance of risks. The Committee is strongly committed to supporting maximum employment and returning inflation to its 2 percent objective."},
+    {id:"S4", title:"Monitoring stance", text:"In assessing the appropriate stance of monetary policy, the Committee will continue to monitor the implications of incoming information for the economic outlook. The Committee would be prepared to adjust the stance of monetary policy as appropriate if risks emerge that could impede the attainment of the Committee's goals. The Committee's assessments will take into account a wide range of information, including readings on labor market conditions, inflation pressures and inflation expectations, and financial and international developments."},
+    {id:"S5", title:"Votes", text:"Voting for the monetary policy action were Jerome H. Powell, Chair; John C. Williams, Vice Chair; Michael S. Barr; Michelle W. Bowman; Lisa D. Cook; Philip N. Jefferson; Anna Paulson; and Christopher J. Waller. Voting against this action were Stephen I. Miran, who preferred to lower the target range for the federal funds rate by 1/4 percentage point at this meeting; and Beth M. Hammack, Neel Kashkari, and Lorie K. Logan, who supported maintaining the target range for the federal funds rate but did not support inclusion of an easing bias in the statement at this time."}
+  ]},
+  sep: {
+    horizons: ["2026","2027","2028","Longer run"],
+    variables: [
+      {key:"gdp",      label:"Real GDP growth",     prev:{"2026":2.4,"2027":2.3,"2028":2.1,"Longer run":2.0}},
+      {key:"unemp",    label:"Unemployment rate",   prev:{"2026":4.4,"2027":4.3,"2028":4.2,"Longer run":4.2}},
+      {key:"pce",      label:"PCE inflation",       prev:{"2026":2.7,"2027":2.2,"2028":2.0,"Longer run":2.0}},
+      {key:"core_pce", label:"Core PCE inflation",  prev:{"2026":2.7,"2027":2.2,"2028":2.0,"Longer run":null}},
+      {key:"ffr",      label:"Federal funds rate",  prev:{"2026":3.4,"2027":3.1,"2028":3.1,"Longer run":3.1}}
+    ]
+  },
+  uncertainty: {
+    columns:["Lower","Broadly similar","Higher"],
+    variables:[
+      {key:"gdp",      label:"Real GDP growth",   prev:{"Lower":0,"Broadly similar":4,"Higher":15}},
+      {key:"unemp",    label:"Unemployment rate", prev:{"Lower":0,"Broadly similar":3,"Higher":16}},
+      {key:"pce",      label:"PCE inflation",     prev:{"Lower":0,"Broadly similar":3,"Higher":16}},
+      {key:"core_pce", label:"Core PCE inflation",prev:{"Lower":0,"Broadly similar":4,"Higher":15}}
+    ]
+  },
+  risks: {
+    columns:["Weighted to downside","Broadly balanced","Weighted to upside"],
+    variables:[
+      {key:"gdp",      label:"Real GDP growth",   prev:{"Weighted to downside":14,"Broadly balanced":5,"Weighted to upside":0}},
+      {key:"unemp",    label:"Unemployment rate", prev:{"Weighted to downside":0,"Broadly balanced":3,"Weighted to upside":16}},
+      {key:"pce",      label:"PCE inflation",     prev:{"Weighted to downside":0,"Broadly balanced":2,"Weighted to upside":17}},
+      {key:"core_pce", label:"Core PCE inflation",prev:{"Weighted to downside":0,"Broadly balanced":3,"Weighted to upside":16}}
+    ]
+  }
+};
+
+const FB_CLARITY = ["Confusing","Okay","Clear","Very clear"];
+const FB_LENGTH  = ["Too short","About right","Too long"];
+
+/* ---- state ---- */
+const KEY = "fomc_survey_v2_" + MEETING + "_" + (RESPONDENT_ID || "anon");
+const state = { statement:{}, statement_global_additions:"", sep:{}, uncertainty:{}, risks:{},
+  feedback:{clarity:"",length:"",minutes:"",confusing:"",suggestions:""}, submitted:false };
+SOURCE.statement.sections.forEach(s => state.statement[s.id] = {highlights:[], how:"", add:""});
+SOURCE.sep.variables.forEach(v => state.sep[v.key] = {});
+SOURCE.uncertainty.variables.forEach(v => state.uncertainty[v.key] = {});
+SOURCE.risks.variables.forEach(v => state.risks[v.key] = {});
+(function restore(){
+  try{ const raw = localStorage.getItem(KEY); if(!raw) return;
+    const saved = JSON.parse(raw);
+    if(saved.statement) for(const k in saved.statement){ if(state.statement[k]) Object.assign(state.statement[k], saved.statement[k]); }
+    if(typeof saved.statement_global_additions==="string") state.statement_global_additions=saved.statement_global_additions;
+    if(saved.sep) for(const k in saved.sep){ if(state.sep[k]) state.sep[k]=saved.sep[k]; }
+    if(saved.uncertainty) for(const k in saved.uncertainty){ if(state.uncertainty[k] && typeof saved.uncertainty[k]==="object") state.uncertainty[k]=saved.uncertainty[k]; }
+    if(saved.risks) for(const k in saved.risks){ if(state.risks[k] && typeof saved.risks[k]==="object") state.risks[k]=saved.risks[k]; }
+    if(saved.feedback) Object.assign(state.feedback, saved.feedback);
+    if(saved.submitted) state.submitted=true;
+  }catch(e){}
+})();
+
+/* ---- helpers ---- */
+const $ = sel => document.querySelector(sel);
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function sanitizeDecimal(v){ // non-negative number (SEP cells)
+  v = String(v).replace(/[^0-9.]/g,"");
+  const p = v.split("."); if(p.length>2) v = p[0]+"."+p.slice(1).join("");
+  return v;
+}
+function sanitizeInt(v, max){ // non-negative integer 0..max (percentages)
+  v = String(v).replace(/[^0-9]/g,"");
+  if(v!==""){ let n = parseInt(v,10); if(max!=null && n>max) n=max; v = String(n); }
+  return v;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  const n=$("#savedNote"); n.textContent="Saved"; clearTimeout(save._t);
+  save._t=setTimeout(()=>{n.textContent="";},1400); }
+
+/* =========================================================================
+   PART A: statement highlighter
+   ========================================================================= */
+function mergeRanges(ranges){
+  const s = ranges.slice().filter(r=>r.end>r.start).sort((a,b)=>a.start-b.start);
+  const out=[];
+  for(const r of s){
+    const last=out[out.length-1];
+    if(last && r.start<=last.end){ last.end=Math.max(last.end,r.end); }
+    else out.push({start:r.start,end:r.end});
+  }
+  return out;
+}
+function renderSectionText(secId){
+  const sec = SOURCE.statement.sections.find(s=>s.id===secId);
+  const text = sec.text;
+  const merged = mergeRanges(state.statement[secId].highlights);
+  state.statement[secId].highlights = merged.map(m=>({start:m.start,end:m.end,text:text.slice(m.start,m.end)}));
+  let html="", pos=0;
+  merged.forEach((m,idx)=>{
+    html += escapeHtml(text.slice(pos,m.start));
+    html += '<mark data-sec="'+secId+'" data-idx="'+idx+'" title="Click to remove">'+escapeHtml(text.slice(m.start,m.end))+'</mark>';
+    pos = m.end;
+  });
+  html += escapeHtml(text.slice(pos));
+  $('.stmt-text[data-sec="'+secId+'"]').innerHTML = html;
+}
+function offsetIn(container, node, off){
+  const r=document.createRange(); r.setStart(container,0); r.setEnd(node,off);
+  return r.toString().length;
+}
+function captureSelection(secId){
+  const sel=window.getSelection();
+  if(!sel || sel.rangeCount===0 || sel.isCollapsed) return;
+  const container=$('.stmt-text[data-sec="'+secId+'"]');
+  const range=sel.getRangeAt(0);
+  if(!container.contains(range.startContainer) || !container.contains(range.endContainer)) return;
+  let start=offsetIn(container,range.startContainer,range.startOffset);
+  let end=offsetIn(container,range.endContainer,range.endOffset);
+  if(start>end){ const t=start; start=end; end=t; }
+  if(end-start<1) return;
+  state.statement[secId].highlights.push({start,end,text:SOURCE.statement.sections.find(s=>s.id===secId).text.slice(start,end)});
+  sel.removeAllRanges();
+  renderSectionText(secId); save();
+}
+function buildStatement(){
+  const root=$("#statement-sections");
+  SOURCE.statement.sections.forEach(sec=>{
+    const st=state.statement[sec.id];
+    const wrap=document.createElement("div"); wrap.className="stmt-section";
+    wrap.innerHTML =
+      '<div class="stmt-head"><span class="stmt-tag">'+sec.id+'</span>'+
+        '<span class="stmt-name">'+escapeHtml(sec.title)+'</span>'+
+        '<button class="erase" data-sec="'+sec.id+'">Erase highlights</button></div>'+
+      '<div class="stmt-text" data-sec="'+sec.id+'"></div>'+
+      '<div class="notes">'+
+        '<div><label class="field-label">How will it change? <span class="hint">(if you highlighted anything above)</span></label>'+
+          '<textarea data-field="how" data-sec="'+sec.id+'" placeholder="">'+escapeHtml(st.how||"")+'</textarea></div>'+
+        '<div><label class="field-label">Any new sentences you expect here? <span class="hint">(optional)</span></label>'+
+          '<textarea data-field="add" data-sec="'+sec.id+'" placeholder="Optional">'+escapeHtml(st.add||"")+'</textarea></div>'+
+      '</div>';
+    root.appendChild(wrap);
+    renderSectionText(sec.id);
+
+    const txt=wrap.querySelector('.stmt-text');
+    txt.addEventListener("mouseup", ()=>setTimeout(()=>captureSelection(sec.id),0));
+    txt.addEventListener("touchend", ()=>setTimeout(()=>captureSelection(sec.id),0));
+    txt.addEventListener("click", e=>{
+      if(e.target.tagName==="MARK"){
+        const i=+e.target.dataset.idx;
+        state.statement[sec.id].highlights.splice(i,1);
+        renderSectionText(sec.id); save();
+      }
+    });
+    wrap.querySelector(".erase").addEventListener("click",()=>{
+      state.statement[sec.id].highlights=[]; renderSectionText(sec.id); save();
+    });
+    wrap.querySelectorAll("textarea[data-field]").forEach(ta=>{
+      ta.addEventListener("input",()=>{ state.statement[sec.id][ta.dataset.field]=ta.value; save(); });
+    });
+  });
+}
+
+/* =========================================================================
+   PART B: SEP medians
+   ========================================================================= */
+function buildSep(){
+  const t=$("#sep-table");
+  let head='<thead><tr><th style="text-align:left">Variable</th>';
+  SOURCE.sep.horizons.forEach(h=> head+='<th>'+escapeHtml(h)+'</th>');
+  head+='</tr></thead>';
+  let body='<tbody>';
+  SOURCE.sep.variables.forEach(v=>{
+    body+='<tr><th>'+escapeHtml(v.label)+'</th>';
+    SOURCE.sep.horizons.forEach(h=>{
+      const prev=v.prev[h];
+      if(prev===null || prev===undefined){
+        body+='<td><span class="cell-na">n/a</span></td>';
+      } else {
+        const val=(state.sep[v.key]&&state.sep[v.key][h]!=null)?state.sep[v.key][h]:"";
+        body+='<td><input class="cell-in" type="number" min="0" step="0.1" inputmode="decimal" '+
+          'data-var="'+v.key+'" data-h="'+escapeHtml(h)+'" value="'+escapeHtml(val)+'">'+
+          '<span class="prev">'+SOURCE.prev_sep_short+': '+prev.toFixed(1)+'</span></td>';
+      }
+    });
+    body+='</tr>';
+  });
+  body+='</tbody>';
+  t.innerHTML=head+body;
+  t.querySelectorAll("input.cell-in").forEach(inp=>{
+    inp.addEventListener("input",()=>{
+      const clean=sanitizeDecimal(inp.value); if(clean!==inp.value) inp.value=clean;
+      const k=inp.dataset.var, h=inp.dataset.h;
+      if(clean==="") delete state.sep[k][h]; else state.sep[k][h]=clean;
+      save();
+    });
+  });
+}
+
+/* =========================================================================
+   PARTS C and D: percentage allocation tables
+   ========================================================================= */
+function rowSum(spec, bucket, key){
+  let any=false, sum=0;
+  spec.columns.forEach(c=>{ const x=bucket[key]&&bucket[key][c];
+    if(x!=null && x!==""){ any=true; const n=parseFloat(x); if(!isNaN(n)) sum+=n; } });
+  return {any, sum};
+}
+function updateRowTotal(tableId, spec, bucket, key){
+  const {any,sum}=rowSum(spec,bucket,key);
+  const cell=document.querySelector(tableId+' .rowtotal[data-key="'+key+'"]');
+  const row=document.querySelector(tableId+' tr[data-key="'+key+'"]');
+  if(cell){ cell.textContent = any ? (sum+" / 19") : ""; cell.className="rowtotal"+(any ? (sum===19?" good":" bad") : ""); }
+  if(row) row.classList.toggle("invalid", any && sum!==19);
+}
+function buildPct(tableId, spec, bucket){
+  const t=$(tableId);
+  let head='<thead><tr><th style="text-align:left">Variable</th>';
+  spec.columns.forEach(c=> head+='<th>'+escapeHtml(c)+'</th>');
+  head+='<th>Total</th></tr></thead>';
+  let body='<tbody>';
+  spec.variables.forEach(v=>{
+    body+='<tr data-key="'+v.key+'"><th>'+escapeHtml(v.label)+'</th>';
+    spec.columns.forEach(c=>{
+      const val=(bucket[v.key]&&bucket[v.key][c]!=null)?bucket[v.key][c]:"";
+      body+='<td><input class="cell-in pct" type="number" min="0" max="19" step="1" inputmode="numeric" '+
+        'data-key="'+v.key+'" data-cat="'+escapeHtml(c)+'" value="'+escapeHtml(val)+'">'+
+        '<span class="prev">'+SOURCE.prev_sep_short+': '+v.prev[c]+'</span></td>';
+    });
+    body+='<td><span class="rowtotal" data-key="'+v.key+'"></span></td></tr>';
+  });
+  body+='</tbody>';
+  t.innerHTML=head+body;
+  t.querySelectorAll("input.pct").forEach(inp=>{
+    inp.addEventListener("input",()=>{
+      const clean=sanitizeInt(inp.value,19); if(clean!==inp.value) inp.value=clean;
+      const k=inp.dataset.key, c=inp.dataset.cat;
+      if(!bucket[k]) bucket[k]={};
+      if(clean==="") delete bucket[k][c]; else bucket[k][c]=clean;
+      updateRowTotal(tableId,spec,bucket,k); save();
+    });
+  });
+  spec.variables.forEach(v=> updateRowTotal(tableId,spec,bucket,v.key));
+}
+function pctErrors(){
+  const out=[];
+  [["#unc-table",SOURCE.uncertainty,state.uncertainty,"Uncertainty"],
+   ["#risk-table",SOURCE.risks,state.risks,"Risks"]].forEach(g=>{
+    const tid=g[0], spec=g[1], bucket=g[2], name=g[3];
+    spec.variables.forEach(v=>{ const r=rowSum(spec,bucket,v.key);
+      if(r.any && r.sum!==19) out.push(name+", "+v.label+" ("+r.sum+" of 19)"); });
+  });
+  return out;
+}
+
+/* =========================================================================
+   PART E: feedback
+   ========================================================================= */
+function buildScale(elId, opts, field){
+  const el=$(elId);
+  el.innerHTML=opts.map(o=>{
+    const sel=(state.feedback[field]===o)?' sel':'';
+    return '<label class="'+sel.trim()+'"><input type="radio" name="fb-'+field+'" value="'+escapeHtml(o)+'"'+(sel?' checked':'')+'>'+escapeHtml(o)+'</label>';
+  }).join("");
+  el.querySelectorAll("input[type=radio]").forEach(r=>{
+    r.addEventListener("change",()=>{
+      el.querySelectorAll("label").forEach(l=>l.classList.remove("sel"));
+      r.closest("label").classList.add("sel");
+      state.feedback[field]=r.value; save();
+    });
+  });
+}
+function buildFeedback(){
+  buildScale("#fb-clarity", FB_CLARITY, "clarity");
+  buildScale("#fb-length", FB_LENGTH, "length");
+  const min=$("#fb-minutes"); min.value=state.feedback.minutes||"";
+  min.addEventListener("input",()=>{ const c=sanitizeInt(min.value,null); if(c!==min.value) min.value=c; state.feedback.minutes=c; save(); });
+  const conf=$("#fb-confusing"); conf.value=state.feedback.confusing||"";
+  conf.addEventListener("input",()=>{ state.feedback.confusing=conf.value; save(); });
+  const sug=$("#fb-suggestions"); sug.value=state.feedback.suggestions||"";
+  sug.addEventListener("input",()=>{ state.feedback.suggestions=sug.value; save(); });
+}
+
+/* =========================================================================
+   submit
+   ========================================================================= */
+function buildPayload(){
+  const sections={};
+  SOURCE.statement.sections.forEach(s=>{
+    const st=state.statement[s.id];
+    sections[s.id]={ title:s.title, highlights:st.highlights||[], how:st.how||"", additions:st.add||"" };
+  });
+  return {
+    respondent_id: RESPONDENT_ID||"",
+    meeting: MEETING,
+    submitted_at: new Date().toISOString(),
+    source: { prev_statement_date:SOURCE.prev_statement_date, prev_sep_date:SOURCE.prev_sep_date },
+    statement: { sections, global_additions: state.statement_global_additions||"" },
+    sep_medians: state.sep,
+    uncertainty: state.uncertainty,
+    risks: state.risks,
+    feedback: state.feedback
+  };
+}
+async function doSubmit(){
+  const btn=$("#submitBtn"), st=$("#status");
+  if(state.submitted) return;
+  const errs=pctErrors();
+  if(errs.length){
+    st.className="status warn";
+    st.textContent="These rows do not add up to 19. Please fix them: "+errs.join("; ")+".";
+    const bad=document.querySelector("tr.invalid"); if(bad && bad.scrollIntoView) bad.scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  btn.disabled=true; st.className="status"; st.textContent="Submitting your answers...";
+  const payload=buildPayload(); let posted=false;
+  if(ENDPOINT){
+    try{
+      await fetch(ENDPOINT,{method:"POST",mode:"no-cors",
+        headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(payload)});
+      posted=true;
+    }catch(e){ posted=false; }
+  }
+  if(ENDPOINT && posted){
+    state.submitted=true; save();
+    st.className="status ok";
+    st.textContent="Thank you. Your answers have been submitted anonymously; you can close this page.";
+    btn.textContent="Submitted";
+  } else {
+    st.className="status warn";
+    st.textContent="We could not reach the server. Please check your connection and click Submit again.";
+    btn.disabled=false;
+  }
+}
+
+/* ---- boot ---- */
+document.addEventListener("DOMContentLoaded",()=>{
+  $("#releaseDate").textContent=SOURCE.release_date;
+  $("#prevStmtDate").textContent=SOURCE.prev_statement_date;
+  $("#prevSepLabel").textContent=SOURCE.prev_sep_date;
+
+  buildStatement();
+  buildSep();
+  buildPct("#unc-table", SOURCE.uncertainty, state.uncertainty);
+  buildPct("#risk-table", SOURCE.risks, state.risks);
+  buildFeedback();
+
+  const ga=$("#globalAdd"); ga.value=state.statement_global_additions||"";
+  ga.addEventListener("input",()=>{ state.statement_global_additions=ga.value; save(); });
+
+  $("#submitBtn").addEventListener("click",doSubmit);
+  if(state.submitted){
+    const sb=$("#submitBtn"); sb.disabled=true; sb.textContent="Submitted";
+    const st=$("#status"); st.className="status ok"; st.textContent="You have already submitted from this browser. Thank you.";
+  }
+});
+</script>
+</body>
+</html>
