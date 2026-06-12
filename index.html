@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Expert Survey on FOMC Communication: June 2026 (pilot)</title>
+<meta name="description" content="An anonymous research survey on FOMC communication: forecast the June 2026 FOMC statement and Summary of Economic Projections.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%233a4a5c'/></svg>">
+<meta property="og:title" content="Expert Survey on FOMC Communication (pilot)">
+<meta property="og:description" content="A short anonymous survey: forecast the June 2026 FOMC statement and Summary of Economic Projections.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -42,6 +49,8 @@ body{
 .signoff .name{color:var(--ink); font-weight:600}
 .hl-demo{background:var(--hl); border-radius:2px; padding:0 3px; box-decoration-break:clone}
 .u-emph{text-decoration:underline; text-underline-offset:2px}
+.touch-only{display:none}
+@media (pointer:coarse){ .mouse-only{display:none} .touch-only{display:inline} }
 
 /* ---- parts ---- */
 section.part{padding:40px 0 6px; border-bottom:1px solid var(--rule)}
@@ -81,6 +90,8 @@ section.part{padding:40px 0 6px; border-bottom:1px solid var(--rule)}
 .stmt-text mark{background:var(--hl); border-radius:2px; padding:.5px 1px; cursor:pointer;
   transition:background .12s}
 .stmt-text mark:hover{background:#f6e79a}
+.stmt-text.tapmode{user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; cursor:default}
+.stmt-text .tok{cursor:pointer; border-radius:2px}
 .notes{display:grid; gap:12px; margin-top:14px}
 .field-label{font-family:var(--font-sans); font-size:12.5px; font-weight:600; color:var(--ink-muted);
   text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; display:block}
@@ -102,7 +113,6 @@ table.grid tr.invalid{background:rgba(192,57,43,.08)}
   background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:7px 4px}
 .cell-in:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
 .cell-in.pct{width:50px; text-align:right; padding-right:4px}
-.pct-suffix{font-size:12px; color:var(--ink-faint); margin-left:2px}
 .prev{display:block; font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); margin-top:4px}
 .cell-na{color:var(--ink-faint); font-family:var(--font-mono)}
 .rowtotal{font-family:var(--font-mono); font-size:14px; color:var(--ink-faint)}
@@ -142,6 +152,18 @@ button.ghost:hover{background:var(--paper-hover)}
   .submitbar .inner{padding:10px 18px; flex-wrap:wrap}
   .cell-in{width:52px} .cell-in.pct{width:44px}
 }
+@media (max-width:560px){
+  table.grid, table.grid tbody, table.grid tr, table.grid td, table.grid th{display:block; width:auto}
+  table.grid thead{display:none}
+  table.grid tbody tr{border:1px solid var(--rule); border-radius:6px; padding:10px 12px; margin-bottom:12px}
+  table.grid tbody tr:hover{background:none}
+  table.grid tbody th{padding:0 0 8px; font-size:16px; border:none; white-space:normal}
+  table.grid td{display:flex; align-items:center; gap:10px; border:none; padding:5px 0; text-align:right}
+  table.grid td::before{content:attr(data-label); margin-right:auto; text-align:left;
+    font-family:var(--font-sans); font-size:13px; color:var(--ink-muted); white-space:nowrap}
+  table.grid td .prev{display:inline; margin:0}
+  .cell-in{width:74px; padding:9px 6px} .cell-in.pct{width:62px}
+}
 </style>
 </head>
 <body>
@@ -172,7 +194,7 @@ button.ghost:hover{background:var(--paper-hover)}
   <section class="part" id="partA">
     <div class="part-head"><span class="part-letter">A</span><h2 class="part-title">The statement</h2></div>
     <p class="part-intro">Below is the statement from the last meeting, on <b id="prevStmtDate">April 29, 2026</b>, in its five sections. For each section, mark the wording you expect to change in June, then describe the change.</p>
-    <p class="part-intro">Drag across any words you expect to change and they become highlighted <span class="hl-demo">like this</span>; click a highlight to remove it. Then use the boxes under each section to say how it changes and add any new sentences you expect.</p>
+    <p class="part-intro"><span class="mouse-only">Drag across any words you expect to change and they become highlighted <span class="hl-demo">like this</span>; click a highlight to remove it.</span><span class="touch-only">Tap any word you expect to change to mark it <span class="hl-demo">like this</span>; tap it again to unmark.</span> Then use the boxes under each section to say how it changes and add any new sentences you expect.</p>
     <div id="statement-sections"></div>
     <div class="stmt-section" style="border-bottom:none">
       <div class="stmt-head"><span class="stmt-tag">S6</span>
@@ -203,7 +225,7 @@ button.ghost:hover{background:var(--paper-hover)}
   <!-- PART D -->
   <section class="part" id="partD">
     <div class="part-head"><span class="part-letter">D</span><h2 class="part-title">Balance of risks</h2></div>
-    <p class="part-intro">How will they assess the balance of risks to those projections?</p>
+    <p class="part-intro">How will the participants assess the balance of risks to those projections?</p>
     <div class="explain">In the SEP, each participant judges whether the risks to their own projections are <b>weighted to the downside</b>, <b>broadly balanced</b>, or <b>weighted to the upside</b>. Roughly, broadly balanced means viewing the confidence interval around the projection as approximately symmetric, rather than tilted up or down. For each variable, give the number of the 19 participants you expect in each category; the three numbers add up to 19. Each grey figure is the corresponding count from the March 2026 SEP.</div>
     <table class="grid" id="risk-table"></table>
   </section>
@@ -251,8 +273,8 @@ const ENDPOINT = "https://script.google.com/macros/s/AKfycbx34v6TkkySyjTQar02y2c
 const RESPONDENT_ID = "";
 const MEETING = "2026-06";
 
-/* Source data snapshot. Taken from FedGen-data/parsed/statements.jsonl (statement_20260429)
-   and sep.jsonl (20260318). To build the final version, replace this block. */
+/* Source data snapshot: previous statement (2026-04-29) and SEP (2026-03-18).
+   Replace this block to build the next version. */
 const SOURCE = {
   meeting_label: "June 16-17, 2026",
   release_date: "June 17, 2026",
@@ -322,13 +344,14 @@ SOURCE.risks.variables.forEach(v => state.risks[v.key] = {});
 
 /* ---- helpers ---- */
 const $ = sel => document.querySelector(sel);
+const TOUCH = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function sanitizeDecimal(v){ // non-negative number (SEP cells)
   v = String(v).replace(/[^0-9.]/g,"");
   const p = v.split("."); if(p.length>2) v = p[0]+"."+p.slice(1).join("");
   return v;
 }
-function sanitizeInt(v, max){ // non-negative integer 0..max (percentages)
+function sanitizeInt(v, max){ // non-negative integer 0..max (counts)
   v = String(v).replace(/[^0-9]/g,"");
   if(v!==""){ let n = parseInt(v,10); if(max!=null && n>max) n=max; v = String(n); }
   return v;
@@ -382,6 +405,42 @@ function captureSelection(secId){
   sel.removeAllRanges();
   renderSectionText(secId); save();
 }
+function subtractRange(ranges,s,e){
+  const out=[];
+  ranges.forEach(r=>{
+    if(e<=r.start||s>=r.end){ out.push(r); return; }
+    if(r.start<s) out.push({start:r.start,end:s});
+    if(e<r.end)   out.push({start:e,end:r.end});
+  });
+  return out;
+}
+function renderSectionTap(secId){
+  const sec=SOURCE.statement.sections.find(s=>s.id===secId);
+  const text=sec.text;
+  const merged=mergeRanges(state.statement[secId].highlights);
+  state.statement[secId].highlights=merged.map(m=>({start:m.start,end:m.end,text:text.slice(m.start,m.end)}));
+  const on=p=>merged.some(r=>p>=r.start&&p<r.end);
+  let html="", last=0, m; const re=/\S+/g;
+  while((m=re.exec(text))){
+    const s=m.index, e=s+m[0].length;
+    html+=escapeHtml(text.slice(last,s));
+    const tag=on(s)?'mark':'span';
+    html+='<'+tag+' class="tok" data-s="'+s+'" data-e="'+e+'">'+escapeHtml(m[0])+'</'+tag+'>';
+    last=e;
+  }
+  html+=escapeHtml(text.slice(last));
+  $('.stmt-text[data-sec="'+secId+'"]').innerHTML=html;
+}
+function toggleWord(secId,s,e){
+  const st=state.statement[secId];
+  const merged=mergeRanges(st.highlights);
+  const next = merged.some(r=>s>=r.start&&s<r.end) ? subtractRange(merged,s,e)
+                                                    : mergeRanges(merged.concat([{start:s,end:e}]));
+  const text=SOURCE.statement.sections.find(x=>x.id===secId).text;
+  st.highlights=next.map(m=>({start:m.start,end:m.end,text:text.slice(m.start,m.end)}));
+  renderSectionTap(secId); save();
+}
+function rerender(secId){ (TOUCH?renderSectionTap:renderSectionText)(secId); }
 function buildStatement(){
   const root=$("#statement-sections");
   SOURCE.statement.sections.forEach(sec=>{
@@ -399,20 +458,28 @@ function buildStatement(){
           '<textarea data-field="add" data-sec="'+sec.id+'" placeholder="Optional">'+escapeHtml(st.add||"")+'</textarea></div>'+
       '</div>';
     root.appendChild(wrap);
-    renderSectionText(sec.id);
-
     const txt=wrap.querySelector('.stmt-text');
-    txt.addEventListener("mouseup", ()=>setTimeout(()=>captureSelection(sec.id),0));
-    txt.addEventListener("touchend", ()=>setTimeout(()=>captureSelection(sec.id),0));
-    txt.addEventListener("click", e=>{
-      if(e.target.tagName==="MARK"){
-        const i=+e.target.dataset.idx;
-        state.statement[sec.id].highlights.splice(i,1);
-        renderSectionText(sec.id); save();
-      }
-    });
+    rerender(sec.id);
+
+    if(TOUCH){
+      txt.classList.add("tapmode");
+      txt.addEventListener("click", e=>{
+        const t=e.target.closest(".tok"); if(!t) return;
+        toggleWord(sec.id, +t.dataset.s, +t.dataset.e);
+      });
+    } else {
+      txt.addEventListener("mouseup", ()=>setTimeout(()=>captureSelection(sec.id),0));
+      txt.addEventListener("touchend", ()=>setTimeout(()=>captureSelection(sec.id),0));
+      txt.addEventListener("click", e=>{
+        if(e.target.tagName==="MARK"){
+          const i=+e.target.dataset.idx;
+          state.statement[sec.id].highlights.splice(i,1);
+          renderSectionText(sec.id); save();
+        }
+      });
+    }
     wrap.querySelector(".erase").addEventListener("click",()=>{
-      state.statement[sec.id].highlights=[]; renderSectionText(sec.id); save();
+      state.statement[sec.id].highlights=[]; rerender(sec.id); save();
     });
     wrap.querySelectorAll("textarea[data-field]").forEach(ta=>{
       ta.addEventListener("input",()=>{ state.statement[sec.id][ta.dataset.field]=ta.value; save(); });
@@ -434,10 +501,10 @@ function buildSep(){
     SOURCE.sep.horizons.forEach(h=>{
       const prev=v.prev[h];
       if(prev===null || prev===undefined){
-        body+='<td><span class="cell-na">n/a</span></td>';
+        body+='<td data-label="'+escapeHtml(h)+'"><span class="cell-na">n/a</span></td>';
       } else {
         const val=(state.sep[v.key]&&state.sep[v.key][h]!=null)?state.sep[v.key][h]:"";
-        body+='<td><input class="cell-in" type="number" min="0" step="0.1" inputmode="decimal" '+
+        body+='<td data-label="'+escapeHtml(h)+'"><input class="cell-in" type="number" min="0" step="0.1" inputmode="decimal" '+
           'data-var="'+v.key+'" data-h="'+escapeHtml(h)+'" value="'+escapeHtml(val)+'">'+
           '<span class="prev">'+SOURCE.prev_sep_short+': '+prev.toFixed(1)+'</span></td>';
       }
@@ -457,7 +524,7 @@ function buildSep(){
 }
 
 /* =========================================================================
-   PARTS C and D: percentage allocation tables
+   PARTS C and D: participant-count tables
    ========================================================================= */
 function rowSum(spec, bucket, key){
   let any=false, sum=0;
@@ -482,11 +549,11 @@ function buildPct(tableId, spec, bucket){
     body+='<tr data-key="'+v.key+'"><th>'+escapeHtml(v.label)+'</th>';
     spec.columns.forEach(c=>{
       const val=(bucket[v.key]&&bucket[v.key][c]!=null)?bucket[v.key][c]:"";
-      body+='<td><input class="cell-in pct" type="number" min="0" max="19" step="1" inputmode="numeric" '+
+      body+='<td data-label="'+escapeHtml(c)+'"><input class="cell-in pct" type="number" min="0" max="19" step="1" inputmode="numeric" '+
         'data-key="'+v.key+'" data-cat="'+escapeHtml(c)+'" value="'+escapeHtml(val)+'">'+
         '<span class="prev">'+SOURCE.prev_sep_short+': '+v.prev[c]+'</span></td>';
     });
-    body+='<td><span class="rowtotal" data-key="'+v.key+'"></span></td></tr>';
+    body+='<td data-label="Total"><span class="rowtotal" data-key="'+v.key+'"></span></td></tr>';
   });
   body+='</tbody>';
   t.innerHTML=head+body;
